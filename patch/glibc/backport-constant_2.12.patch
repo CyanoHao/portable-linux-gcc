@@ -1,0 +1,18 @@
+diff --git a/sysdeps/unix/sysv/linux/sys/ptrace.h b/sysdeps/unix/sysv/linux/sys/ptrace.h
+index 08658f9764..03e8057eb9 100644
+--- a/sysdeps/unix/sysv/linux/sys/ptrace.h
++++ b/sysdeps/unix/sysv/linux/sys/ptrace.h
+@@ -125,8 +125,12 @@ enum __ptrace_request
+ #define PT_GETSIGINFO PTRACE_GETSIGINFO
+ 
+   /* Set new siginfo for process.  */
+-  PTRACE_SETSIGINFO = 0x4203
++  PTRACE_SETSIGINFO = 0x4203,
+ #define PT_SETSIGINFO PTRACE_SETSIGINFO
++
++  /* Get register content.  */
++  PTRACE_GETREGSET = 0x4204,
++#define PTRACE_GETREGSET PTRACE_GETREGSET
+ };
+ 
+ 

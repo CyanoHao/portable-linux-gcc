@@ -1,0 +1,18 @@
+diff --git a/misc/sys/cdefs.h b/misc/sys/cdefs.h
+index ce5e83d571..6d12ccfa79 100644
+--- a/misc/sys/cdefs.h
++++ b/misc/sys/cdefs.h
+@@ -279,6 +279,13 @@
+ # define __always_inline __inline
+ #endif
+ 
++/* GCC 4.3 and above with -std=c99 or -std=gnu99 implements ISO C99
++   inline semantics, unless -fgnu89-inline is used.  */
++#ifdef __GNUC_STDC_INLINE__
++# define __inline __inline __attribute__ ((__gnu_inline__))
++# define __inline__ __inline
++#endif
++
+ /* It is possible to compile containing GCC extensions even if GCC is
+    run in pedantic mode if the uses are carefully marked using the
+    `__extension__' keyword.  But this is not generally available before

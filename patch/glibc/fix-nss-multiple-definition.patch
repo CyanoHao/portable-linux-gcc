@@ -1,0 +1,43 @@
+diff --git a/nscd/gai.c b/nscd/gai.c
+index d081747797..576fd0045b 100644
+--- a/nscd/gai.c
++++ b/nscd/gai.c
+@@ -45,3 +45,6 @@
+ #ifdef HAVE_LIBIDN
+ # include <libidn/idn-stub.c>
+ #endif
++
++/* Some variables normally defined in libc.  */
++service_user *__nss_hosts_database attribute_hidden;
+diff --git a/nss/nsswitch.c b/nss/nsswitch.c
+index 4b8deedabf..ee46f24424 100644
+--- a/nss/nsswitch.c
++++ b/nss/nsswitch.c
+@@ -62,7 +62,7 @@ static service_library *nss_new_service (name_database *database,
+ 
+ /* Declare external database variables.  */
+ #define DEFINE_DATABASE(name)						      \
+-  extern service_user *__nss_##name##_database attribute_hidden;	      \
++  service_user *__nss_##name##_database attribute_hidden;		      \
+   weak_extern (__nss_##name##_database)
+ #include "databases.def"
+ #undef DEFINE_DATABASE
+diff --git a/nss/nsswitch.h b/nss/nsswitch.h
+index eccb535ef5..63573b9ebc 100644
+--- a/nss/nsswitch.h
++++ b/nss/nsswitch.h
+@@ -226,10 +226,10 @@ libc_hidden_proto (__nss_hostname_digits_dots)
+ #define MAX_NR_ADDRS    48
+ 
+ /* Prototypes for __nss_*_lookup2 functions.  */
+-#define DEFINE_DATABASE(arg)				    \
+-  service_user *__nss_##arg##_database attribute_hidden;    \
+-  int __nss_##arg##_lookup2 (service_user **, const char *, \
+-			     const char *, void **);	    \
++#define DEFINE_DATABASE(arg)						      \
++  extern service_user *__nss_##arg##_database attribute_hidden;		      \
++  int __nss_##arg##_lookup2 (service_user **, const char *,		      \
++			     const char *, void **);			      \
+   libc_hidden_proto (__nss_##arg##_lookup2)
+ #include "databases.def"
+ #undef DEFINE_DATABASE

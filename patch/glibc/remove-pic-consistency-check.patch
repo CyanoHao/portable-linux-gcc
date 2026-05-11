@@ -1,0 +1,13 @@
+diff --git a/sysdeps/unix/sysv/linux/i386/sysdep.h b/sysdeps/unix/sysv/linux/i386/sysdep.h
+index b91af4007c..003c48755a 100644
+--- a/sysdeps/unix/sysv/linux/i386/sysdep.h
++++ b/sysdeps/unix/sysv/linux/i386/sysdep.h
+@@ -541,7 +541,7 @@ asm (".L__X'%ebx = 1\n\t"
+ #endif
+ 
+ /* Consistency check for position-independent code.  */
+-#ifdef __PIC__
++#if defined __PIC__ && !__GNUC_PREREQ(5,0)
+ # define check_consistency()						      \
+   ({ int __res;								      \
+      __asm__ __volatile__						      \

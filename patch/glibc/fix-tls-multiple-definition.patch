@@ -1,0 +1,30 @@
+diff --git a/elf/dl-open.c b/elf/dl-open.c
+index 8cc3ad0964..b92dec4918 100644
+--- a/elf/dl-open.c
++++ b/elf/dl-open.c
+@@ -35,12 +35,6 @@
+ #include <dl-dst.h>
+ 
+ 
+-#ifndef SHARED
+-/* Giving this initialized value preallocates some surplus bytes in the
+-   static TLS area, see __libc_setup_tls (libc-tls.c).  */
+-size_t _dl_tls_static_size = 2048;
+-#endif
+-
+ extern ElfW(Addr) _dl_sysdep_start (void **start_argptr,
+ 				    void (*dl_main) (const ElfW(Phdr) *phdr,
+ 						     ElfW(Word) phnum,
+diff --git a/sysdeps/generic/libc-tls.c b/sysdeps/generic/libc-tls.c
+index 29d9d1e7ea..f85a8087af 100644
+--- a/sysdeps/generic/libc-tls.c
++++ b/sysdeps/generic/libc-tls.c
+@@ -61,7 +61,7 @@ struct dtv_slotinfo_list *_dl_tls_dtv_slotinfo_list;
+ /* Number of modules in the static TLS block.  */
+ size_t _dl_tls_static_nelem;
+ /* Size of the static TLS block.  */
+-size_t _dl_tls_static_size;
++size_t _dl_tls_static_size = 2048;
+ /* Size actually allocated in the static TLS block.  */
+ size_t _dl_tls_static_used;
+ /* Alignment requirement of the static TLS block.  */

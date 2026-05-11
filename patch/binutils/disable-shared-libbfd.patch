@@ -1,0 +1,50 @@
+diff --git a/bfd/Makefile.am b/bfd/Makefile.am
+index e4df05441eb..c3b96ceab68 100644
+--- a/bfd/Makefile.am
++++ b/bfd/Makefile.am
+@@ -46,7 +46,6 @@ bfdincludedir =
+ bfdinclude_HEADERS =
+ rpath_bfdlibdir = @bfdlibdir@
+ noinst_LTLIBRARIES = libbfd.la
+-libbfd_la_LDFLAGS += -rpath $(rpath_bfdlibdir)
+ endif
+ 
+ # This is where we get zlib from.  zlibdir is -L../zlib and zlibinc is
+diff --git a/bfd/Makefile.in b/bfd/Makefile.in
+index 14512cf61fb..d9306b35489 100644
+--- a/bfd/Makefile.in
++++ b/bfd/Makefile.in
+@@ -108,7 +108,7 @@ POST_UNINSTALL = :
+ build_triplet = @build@
+ host_triplet = @host@
+ target_triplet = @target@
+-@INSTALL_LIBBFD_FALSE@am__append_1 = -rpath $(rpath_bfdlibdir)
++@INSTALL_LIBBFD_FALSE@am__append_1 =
+ @PLUGINS_TRUE@am__append_2 = $(INCDIR)/plugin-api.h
+ subdir = .
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+diff --git a/opcodes/Makefile.am b/opcodes/Makefile.am
+index a0fcf4d5ec7..686d598a668 100644
+--- a/opcodes/Makefile.am
++++ b/opcodes/Makefile.am
+@@ -47,7 +47,6 @@ bfdlibdir =
+ bfdincludedir =
+ rpath_bfdlibdir = @bfdlibdir@
+ noinst_LTLIBRARIES = libopcodes.la
+-libopcodes_la_LDFLAGS += -rpath $(rpath_bfdlibdir)
+ endif
+ 
+ # This is where bfd.h lives.
+diff --git a/opcodes/Makefile.in b/opcodes/Makefile.in
+index c5449bebf54..99779484325 100644
+--- a/opcodes/Makefile.in
++++ b/opcodes/Makefile.in
+@@ -109,7 +109,7 @@ POST_UNINSTALL = :
+ build_triplet = @build@
+ host_triplet = @host@
+ target_triplet = @target@
+-@INSTALL_LIBBFD_FALSE@am__append_1 = -rpath $(rpath_bfdlibdir)
++@INSTALL_LIBBFD_FALSE@am__append_1 =
+ subdir = .
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+ am__aclocal_m4_deps = $(top_srcdir)/../bfd/acinclude.m4 \

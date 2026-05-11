@@ -1,0 +1,58 @@
+diff --git a/elf/elf.h b/elf/elf.h
+index c772ff41ad..3f4da3979e 100644
+--- a/elf/elf.h
++++ b/elf/elf.h
+@@ -613,6 +613,7 @@ typedef struct
+ #define NT_PPC_VSX	0x102		/* PowerPC VSX registers */
+ #define NT_386_TLS	0x200		/* i386 TLS slots (struct user_desc) */
+ #define NT_386_IOPERM	0x201		/* x86 io permission bitmap (1=deny) */
++#define NT_X86_XSTATE	0x202		/* x86 extended state using xsave */
+ 
+ /* Legal values for the note segment descriptor types for object files.  */
+ 
+diff --git a/sysdeps/unix/sysv/linux/i386/bits/fcntl.h b/sysdeps/unix/sysv/linux/i386/bits/fcntl.h
+index 06b9e48acc..6023c58799 100644
+--- a/sysdeps/unix/sysv/linux/i386/bits/fcntl.h
++++ b/sysdeps/unix/sysv/linux/i386/bits/fcntl.h
+@@ -174,7 +174,8 @@ enum __pid_type
+   {
+     F_OWNER_TID = 0,	/* Kernel thread.  */
+     F_OWNER_PID,	/* Process.  */
+-    F_OWNER_GID		/* Process group.  */
++    F_OWNER_PGRP,	/* Process group.  */
++    F_OWNER_GID = F_OWNER_PGRP, /* Alternative, obsolete name.  */
+   };
+ 
+ /* Structure to use with F_GETOWN_EX and F_SETOWN_EX.  */
+diff --git a/sysdeps/unix/sysv/linux/sys/ptrace.h b/sysdeps/unix/sysv/linux/sys/ptrace.h
+index 08658f9764..03e8057eb9 100644
+--- a/sysdeps/unix/sysv/linux/sys/ptrace.h
++++ b/sysdeps/unix/sysv/linux/sys/ptrace.h
+@@ -125,8 +125,12 @@ enum __ptrace_request
+ #define PT_GETSIGINFO PTRACE_GETSIGINFO
+ 
+   /* Set new siginfo for process.  */
+-  PTRACE_SETSIGINFO = 0x4203
++  PTRACE_SETSIGINFO = 0x4203,
+ #define PT_SETSIGINFO PTRACE_SETSIGINFO
++
++  /* Get register content.  */
++  PTRACE_GETREGSET = 0x4204,
++#define PTRACE_GETREGSET PTRACE_GETREGSET
+ };
+ 
+ 
+diff --git a/sysdeps/unix/sysv/linux/x86_64/bits/fcntl.h b/sysdeps/unix/sysv/linux/x86_64/bits/fcntl.h
+index 29c956cdf8..5f5a0dcd74 100644
+--- a/sysdeps/unix/sysv/linux/x86_64/bits/fcntl.h
++++ b/sysdeps/unix/sysv/linux/x86_64/bits/fcntl.h
+@@ -188,7 +188,8 @@ enum __pid_type
+   {
+     F_OWNER_TID = 0,	/* Kernel thread.  */
+     F_OWNER_PID,	/* Process.  */
+-    F_OWNER_GID		/* Process group.  */
++    F_OWNER_PGRP,	/* Process group.  */
++    F_OWNER_GID = F_OWNER_PGRP, /* Alternative, obsolete name.  */
+   };
+ 
+ /* Structure to use with F_GETOWN_EX and F_SETOWN_EX.  */

@@ -1,0 +1,47 @@
+from typing import Dict
+
+CHECKSUMS: Dict[str, str] = {
+  'Python-3.13.13.tar.xz': '2ab91ff401783ccca64f75d10c882e957bdfd60e2bf5a72f8421793729b78a71',
+
+  'binutils-2.46.0.tar.zst': '8ba6a3c4d29eae4dc1bdffb29d1e99b2a658c3f4c6a23ea1c507e9fa47db2898',
+
+  'expat-2.7.5.tar.xz': '1032dfef4ff17f70464827daa28369b20f6584d108bc36f17ab1676e1edd2f91',
+
+  'gcc-16.1.0.tar.xz': '50efb4d94c3397aff3b0d61a5abd748b4dd31d9d3f2ab7be05b171d36a510f79',
+
+  'gdb-17.1.tar.xz': '14996f5f74c9f68f5a543fdc45bca7800207f91f92aeea6c2e791822c7c6d876',
+
+  'glibc-2.3.6.tar.bz2': 'e73ff5eddea95d09238b41d3c9c4d9ccddcf99fcc93d04956599c91c704f4a8e',
+  'glibc-2.11.3.tar.xz': '5dccd5e462d08e8fa09d787f7e80c2de36adc9ba999927c6efa2ca9aad39302b',
+  'glibc-2.13.tar.xz': '98ee47fc77b01d5805e2cad3ed8e5515220ff32626a049dff3d5529b8f8bdcc1',
+  'glibc-2.16.0.tar.xz': '1edc36aa2a6cb7127971fce8e02eecffe9c7956297ad3ef10dd4c09f486d5924',
+  'glibc-2.17.tar.xz': '6914e337401e0e0ade23694e1b2c52a5f09e4eda3270c67e7c3ba93a89b5b23e',
+  'glibc-2.19.tar.xz': '2d3997f588401ea095a0b27227b1d50cdfdd416236f6567b564549d3b46ea2a2',
+  'glibc-2.22.tar.xz': 'eb731406903befef1d8f878a46be75ef862b9056ab0cde1626d08a7a05328948',
+  'glibc-2.24.tar.xz': '99d4a3e8efd144d71488e478f62587578c0f4e1fa0b4eed47ee3d4975ebeb5d3',
+  'glibc-2.25.tar.xz': '067bd9bb3390e79aa45911537d13c3721f1d9d3769931a30c2681bfee66f23a0',
+  'glibc-2.26.tar.xz': 'e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd',
+  'glibc-2.27.tar.xz': '5172de54318ec0b7f2735e5a91d908afe1c9ca291fec16b5374d9faadfc1fc72',
+  'glibc-2.36.tar.xz': '1c959fea240906226062cb4b1e7ebce71a9f0e3c0836c09e7e3423d434fcfe75',
+  'glibc-2.42.tar.xz': 'd1775e32e4628e64ef930f435b67bb63af7599acb6be2b335b9f19f16509f17f',
+  'glibc-2.43.tar.xz': 'd9c86c6b5dbddb43a3e08270c5844fc5177d19442cf5b8df4be7c07cd5fa3831',
+
+  'gmp-6.3.0.tar.zst': '7f55d73f472c29cc14d7fa985f3654d48829415b649eaf61646b7b33f2a80e27',
+
+  'linux-3.12.74.tar.xz': 'c82588208c94ada157bc222d2ebf4778785abee0e092761e6cfdc0ef863859c4',
+  'linux-4.9.337.tar.xz': '5385aaec55c766e3f462511453f5c63d7898b2d0e9ea74f22a23ebbedab0b3c6',
+  'linux-6.18.29.tar.xz': 'c33ea75b1f3bc5fccab836790cd3684eab7057ff383464b5efd8a68ba622a83c',
+
+  'make-4.2.1.tar.bz2': 'd6e262bf3601b42d2b1e4ef8310029e1dcf20083c5446b4b7aa67081fdffc589',
+  'make-4.4.1.tar.lz': '8814ba072182b605d156d7589c19a43b89fc58ea479b9355146160946f8cf6e9',
+
+  'mpc-1.4.1.tar.xz': '91204cd32f164bd3b7c992d4a6a8ce6519511aadab30f78b6982d0bf8d73e931',
+
+  'mpdecimal-4.0.1.tar.gz': '96d33abb4bb0070c7be0fed4246cd38416188325f820468214471938545b1ac8',
+
+  'mpfr-4.2.2.tar.xz': 'b67ba0383ef7e8a8563734e2e889ef5ec3c3b898a01d00fa0a6869ad81c6ce01',
+
+  'xmake-3.0.8.tar.gz': '73da077440d1327e24bc74da2888c418e589dc28966e6e6b5bd6e889721b2d07',
+
+  'zlib-1.3.2.tar.xz': 'd7a0654783a4da529d1bb793b7ad9c3318020af77667bcae35f95d0e42a792f3',
+}

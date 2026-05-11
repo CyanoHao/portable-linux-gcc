@@ -1,0 +1,19 @@
+diff --git a/nptl/sysdeps/unix/sysv/linux/i386/Makefile b/nptl/sysdeps/unix/sysv/linux/i386/Makefile
+new file mode 100644
+index 0000000000..48eef38a24
+--- /dev/null
++++ b/nptl/sysdeps/unix/sysv/linux/i386/Makefile
+@@ -0,0 +1,3 @@
++ifeq ($(subdir),nptl)
++CFLAGS-pt-initfini.s += -fno-asynchronous-unwind-tables
++endif
+diff --git a/sysdeps/i386/elf/Makefile b/sysdeps/i386/elf/Makefile
+new file mode 100644
+index 0000000000..61064d4ef7
+--- /dev/null
++++ b/sysdeps/i386/elf/Makefile
+@@ -0,0 +1,4 @@
++ifeq ($(subdir),csu)
++# Turn off -fasynchronous-unwind-tables
++CFLAGS-initfini.s += -fno-asynchronous-unwind-tables
++endif

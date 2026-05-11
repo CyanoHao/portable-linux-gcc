@@ -1,0 +1,26 @@
+diff --git a/configure b/configure
+index fc023d0c70..d86f660803 100755
+--- a/configure
++++ b/configure
+@@ -7247,7 +7247,7 @@ echo >&5 "libc_undefs='$libc_undefs'"
+ # defaults to -fstack-protector but this produces an undefined symbol
+ # other than __stack_chk_fail.  However, compilers like that have not
+ # been encountered in practice.
+-libc_undefs=`echo "$libc_undefs" | egrep '^(foobar|__stack_chk_fail)$'`
++libc_undefs=`echo "$libc_undefs" | sed 's/__stack_chk_fail_local/__stack_chk_fail/' | egrep '^(foobar|__stack_chk_fail)$'`
+ case "$libc_undefs" in
+ foobar) libc_cv_predef_stack_protector=no ;;
+ '__stack_chk_fail
+diff --git a/configure.ac b/configure.ac
+index f3dd87d912..3c55d55ced 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2054,7 +2054,7 @@ echo >&AS_MESSAGE_LOG_FD "libc_undefs='$libc_undefs'"
+ # defaults to -fstack-protector but this produces an undefined symbol
+ # other than __stack_chk_fail.  However, compilers like that have not
+ # been encountered in practice.
+-libc_undefs=`echo "$libc_undefs" | egrep '^(foobar|__stack_chk_fail)$'`
++libc_undefs=`echo "$libc_undefs" | sed 's/__stack_chk_fail_local/__stack_chk_fail/' | egrep '^(foobar|__stack_chk_fail)$'`
+ case "$libc_undefs" in
+ foobar) libc_cv_predef_stack_protector=no ;;
+ '__stack_chk_fail

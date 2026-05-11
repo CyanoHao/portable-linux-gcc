@@ -1,0 +1,31 @@
+diff --git a/elf/elf.h b/elf/elf.h
+index 51d4e6cca7..ae40c7becd 100644
+--- a/elf/elf.h
++++ b/elf/elf.h
+@@ -609,6 +609,8 @@ typedef struct
+ #define NT_PPC_VMX	0x100		/* PowerPC Altivec/VMX registers */
+ #define NT_PPC_SPE	0x101		/* PowerPC SPE/EVR registers */
+ #define NT_386_TLS	0x200		/* i386 TLS slots (struct user_desc) */
++#define NT_386_IOPERM	0x201		/* x86 io permission bitmap (1=deny) */
++#define NT_X86_XSTATE	0x202		/* x86 extended state using xsave */
+ 
+ /* Legal values for the note segment descriptor types for object files.  */
+ 
+diff --git a/sysdeps/unix/sysv/linux/sys/ptrace.h b/sysdeps/unix/sysv/linux/sys/ptrace.h
+index 08658f9764..03e8057eb9 100644
+--- a/sysdeps/unix/sysv/linux/sys/ptrace.h
++++ b/sysdeps/unix/sysv/linux/sys/ptrace.h
+@@ -125,8 +125,12 @@ enum __ptrace_request
+ #define PT_GETSIGINFO PTRACE_GETSIGINFO
+ 
+   /* Set new siginfo for process.  */
+-  PTRACE_SETSIGINFO = 0x4203
++  PTRACE_SETSIGINFO = 0x4203,
+ #define PT_SETSIGINFO PTRACE_SETSIGINFO
++
++  /* Get register content.  */
++  PTRACE_GETREGSET = 0x4204,
++#define PTRACE_GETREGSET PTRACE_GETREGSET
+ };
+ 
+ 

@@ -1,0 +1,35 @@
+diff --git a/elf/elf.h b/elf/elf.h
+index dae359778b..ea37980429 100644
+--- a/elf/elf.h
++++ b/elf/elf.h
+@@ -603,6 +603,12 @@ typedef struct
+ #define NT_LWPSTATUS	16		/* Contains copy of lwpstatus struct */
+ #define NT_LWPSINFO	17		/* Contains copy of lwpinfo struct */
+ #define NT_PRFPXREG	20		/* Contains copy of fprxregset struct*/
++#define NT_PRXFPREG	0x46e62b7f	/* Contains copy of user_fxsr_struct*/
++#define NT_PPC_VMX	0x100		/* PowerPC Altivec/VMX registers */
++#define NT_PPC_SPE	0x101		/* PowerPC SPE/EVR registers */
++#define NT_386_TLS	0x200		/* i386 TLS slots (struct user_desc) */
++#define NT_386_IOPERM	0x201		/* x86 io permission bitmap (1=deny) */
++#define NT_X86_XSTATE	0x202		/* x86 extended state using xsave */
+ 
+ /* Legal values for the note segment descriptor types for object files.  */
+ 
+diff --git a/sysdeps/unix/sysv/linux/sys/ptrace.h b/sysdeps/unix/sysv/linux/sys/ptrace.h
+index 44284cb307..9065ef407f 100644
+--- a/sysdeps/unix/sysv/linux/sys/ptrace.h
++++ b/sysdeps/unix/sysv/linux/sys/ptrace.h
+@@ -125,8 +125,12 @@ enum __ptrace_request
+ #define PT_GETSIGINFO PTRACE_GETSIGINFO
+ 
+   /* Set new siginfo for process.  */
+-  PTRACE_SETSIGINFO = 0x4203
++  PTRACE_SETSIGINFO = 0x4203,
+ #define PT_SETSIGINFO PTRACE_SETSIGINFO
++
++  /* Get register content.  */
++  PTRACE_GETREGSET = 0x4204,
++#define PTRACE_GETREGSET PTRACE_GETREGSET
+ };
+ 
+ /* Perform process tracing functions.  REQUEST is one of the values

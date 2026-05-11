@@ -1,0 +1,28 @@
+diff --unified --recursive gdb-16.3.orig/gnulib/import/libc-config.h gdb-16.3/gnulib/import/libc-config.h
+--- gdb-16.3.orig/gnulib/import/libc-config.h
++++ gdb-16.3/gnulib/import/libc-config.h
+@@ -152,7 +152,6 @@
+ # undef __glibc_objsize
+ # undef __glibc_objsize0
+ # undef __glibc_unlikely
+-# undef __inline
+ # undef __ptr_t
+ # undef __restrict
+ # undef __restrict_arr
+@@ -163,16 +162,6 @@
+ /* Include our copy of glibc <sys/cdefs.h>.  */
+ # include <cdefs.h>
+ 
+-/* <cdefs.h> __inline is too pessimistic for non-GCC.  */
+-# undef __inline
+-# ifndef HAVE___INLINE
+-#  if 199901 <= __STDC_VERSION__ || defined inline
+-#   define __inline inline
+-#  else
+-#   define __inline
+-#  endif
+-# endif
+-
+ #endif /* defined __glibc_likely */
+ 
+ 

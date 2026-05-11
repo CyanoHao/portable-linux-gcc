@@ -1,0 +1,15 @@
+target("c++23/print")
+  enable_if_cxx_header("print")
+  set_languages("c++23")
+  add_files("print.cc")
+  add_links("stdc++exp")
+  add_tests("default", {pass_outputs = "Hello, world!\n"})
+
+target("c++23/import-std")
+  set_languages("c++23")
+  set_policy("build.c++.modules", true)
+  add_files("import-std.cc")
+  add_links("stdc++exp")
+  add_tests("default", {pass_outputs = "Hello, world!\n"})
+
+  enable_if_cxx_feature("__cpp_lib_modules", 202207, {languages = "c++23", cxxflags = {"-fmodules"}})

@@ -1,0 +1,99 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  buildenv:
+    name: Build container
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build container
+        run: |
+          podman build -t portable-linux-gcc/buildenv support/buildenv
+
+          mkdir assets
+          podman save portable-linux-gcc/buildenv | zstd -o assets/buildenv.tar.zst
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: buildenv
+          path: assets/buildenv.tar.zst
+
+  build:
+    name: ${{ matrix.arch }}
+    needs: buildenv
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+          - arch: x86_64.v3
+          - arch: aarch64
+            dpkg_arch: arm64
+          - arch: riscv64
+            dpkg_arch: riscv64
+          - arch: loong64
+            skip_test: true
+
+          - arch: x86_64-2010
+          - arch: x86_64-2007
+
+          - arch: i686
+            dpkg_arch: i386
+          - arch: i686-2010
+            dpkg_arch: i386
+          - arch: i686-2007
+            dpkg_arch: i386
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: docker/setup-qemu-action@v4
+
+      - name: Enable multiarch
+        if: matrix.dpkg_arch
+        run: |
+          sudo dpkg --add-architecture ${{ matrix.dpkg_arch }}
+          sudo cp .ci/sources.list /etc/apt/sources.list
+
+      - uses: ConorMacBride/install-package@v1
+        with:
+          apt: python3-packaging libarchive-tools
+
+      - uses: ConorMacBride/install-package@v1
+        if: matrix.dpkg_arch
+        with:
+          apt: libc6:${{ matrix.dpkg_arch }}
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: buildenv
+          path: assets
+
+      - name: Build
+        run: |
+          zstdcat assets/buildenv.tar.zst | podman load
+          podman run --rm --cap-add=sys_admin -v $PWD:/mnt -w /mnt portable-linux-gcc/buildenv \
+            ./main.py --arch ${{ matrix.arch }}
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: gcc-${{ matrix.arch }}
+          path: dist
+
+      - name: Test
+        if: ${{ !matrix.skip_test }}
+        run: |
+          ./test.py --arch ${{ matrix.arch }} --verbose
+
+      - name: SAT archive
+        run: |
+          ./sat.py --arch ${{ matrix.arch }}
+          tar -C pkg -cf - sat-${{ matrix.arch }} | bzip2 -9 >dist/sat-${{ matrix.arch }}.tar.bz2
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: sat-${{ matrix.arch }}
+          path: dist/sat-${{ matrix.arch }}.tar.bz2

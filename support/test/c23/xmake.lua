@@ -1,0 +1,5 @@
+target("c23/embed")
+  enable_if_c_macro("__has_embed", {languages = "c23"})
+  set_languages("c23")
+  add_files("embed.c")
+  add_tests("default", {pass_outputs = "Hello, world!\n"})

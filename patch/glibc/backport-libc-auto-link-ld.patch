@@ -1,0 +1,13 @@
+diff --git a/Makerules b/Makerules
+index 5d7b24f31f..7df730984e 100644
+--- a/Makerules
++++ b/Makerules
+@@ -970,7 +970,7 @@ $(inst_libdir)/libc.so: $(common-objpfx)format.lds \
+ 	 cat $<; \
+ 	 echo 'GROUP ( $(slibdir)/libc.so$(libc.so-version)' \
+ 	      '$(libdir)/$(patsubst %,$(libtype.oS),$(libprefix)$(libc-name))'\
+-	      ')' \
++	      ' AS_NEEDED (' $(slibdir)/$(rtld-installed-name) ') )' \
+ 	) > $@.new
+ 	mv -f $@.new $@
+ 

@@ -1,0 +1,19 @@
+diff --git a/gcc/gcc.cc b/gcc/gcc.cc
+index 43b0158ee02..96c0294048c 100644
+--- a/gcc/gcc.cc
++++ b/gcc/gcc.cc
+@@ -1386,7 +1386,13 @@ static const char *const multilib_defaults_raw[] = MULTILIB_DEFAULTS;
+ 
+ static const char *const driver_self_specs[] = {
+   "%{fdump-final-insns:-fdump-final-insns=.} %<fdump-final-insns",
+-  DRIVER_SELF_SPECS, CONFIGURE_SPECS, GOMP_SELF_SPECS, GTM_SELF_SPECS,
++  DRIVER_SELF_SPECS
++#ifdef __GLIBC__
++  // static by default (__GLIBC__ is a dirty hack, but it avoids 2 gcc sources)
++  "%{!shared:%{!static:%{!static-pie:%{!pie:-static}}}} "
++  "%{pie:-static-pie %<pie} "
++#endif
++  , CONFIGURE_SPECS, GOMP_SELF_SPECS, GTM_SELF_SPECS,
+   /* This discards -fmultiflags at the end of self specs processing in the
+      driver, so that it is effectively Ignored, without actually marking it as
+      Ignored, which would get it discarded before self specs could remap it.  */

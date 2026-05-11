@@ -1,0 +1,54 @@
+diff --git a/gcc/config/loongarch/linux.h b/gcc/config/loongarch/linux.h
+index 8fd1d50da16..a7f8f7e818e 100644
+--- a/gcc/config/loongarch/linux.h
++++ b/gcc/config/loongarch/linux.h
+@@ -45,8 +45,8 @@ along with GCC; see the file COPYING3.  If not see
+ #define ABI_LIBDIR "lib"
+ #endif
+ 
+-#define STANDARD_STARTFILE_PREFIX_1 "/" ABI_LIBDIR "/"
+-#define STANDARD_STARTFILE_PREFIX_2 "/usr/" ABI_LIBDIR "/"
++#define STANDARD_STARTFILE_PREFIX_1 ""
++#define STANDARD_STARTFILE_PREFIX_2 ""
+ 
+ 
+ /* Define this to be nonzero if static stack checking is supported.  */
+diff --git a/gcc/cppdefault.cc b/gcc/cppdefault.cc
+index dccd89c4533..43767e0b4ef 100644
+--- a/gcc/cppdefault.cc
++++ b/gcc/cppdefault.cc
+@@ -64,7 +64,7 @@ const struct default_include cpp_include_defaults[]
+     /* This is the dir for gcc's private headers.  */
+     { GCC_INCLUDE_DIR, "GCC", 0, 0, 0, 0 },
+ #endif
+-#ifdef LOCAL_INCLUDE_DIR
++#if 0
+     /* /usr/local/include comes before the fixincluded header files.  */
+     { LOCAL_INCLUDE_DIR, 0, 0, 1, 1, 2 },
+     { LOCAL_INCLUDE_DIR, 0, 0, 1, 1, 0 },
+@@ -95,7 +95,7 @@ const struct default_include cpp_include_defaults[]
+     /* Another place the target system's headers might be.  */
+     { TOOL_INCLUDE_DIR, "BINUTILS", 0, 1, 0, 0 },
+ #endif
+-#ifdef NATIVE_SYSTEM_HEADER_DIR
++#if 0
+     /* /usr/include comes dead last.  */
+     { NATIVE_SYSTEM_HEADER_DIR, NATIVE_SYSTEM_HEADER_COMPONENT, 0, 0, 1, 2 },
+     { NATIVE_SYSTEM_HEADER_DIR, NATIVE_SYSTEM_HEADER_COMPONENT, 0, 0, 1, 0 },
+diff --git a/gcc/gcc.cc b/gcc/gcc.cc
+index 43b0158ee02..d690811a6c2 100644
+--- a/gcc/gcc.cc
++++ b/gcc/gcc.cc
+@@ -1642,10 +1642,10 @@ static const char *gcc_libexec_prefix;
+ /* Default prefixes to attach to command names.  */
+ 
+ #ifndef STANDARD_STARTFILE_PREFIX_1
+-#define STANDARD_STARTFILE_PREFIX_1 "/lib/"
++#define STANDARD_STARTFILE_PREFIX_1 ""
+ #endif
+ #ifndef STANDARD_STARTFILE_PREFIX_2
+-#define STANDARD_STARTFILE_PREFIX_2 "/usr/lib/"
++#define STANDARD_STARTFILE_PREFIX_2 ""
+ #endif
+ 
+ #ifdef CROSS_DIRECTORY_STRUCTURE  /* Don't use these prefixes for a cross compiler.  */

@@ -1,0 +1,34 @@
+diff --git a/sunrpc/Makefile b/sunrpc/Makefile
+index 48a458a0c0..462aad44e1 100644
+--- a/sunrpc/Makefile
++++ b/sunrpc/Makefile
+@@ -87,12 +87,14 @@ endif
+ # and not wanted on complete systems.
+ # others := rpcinfo
+ # install-sbin := rpcinfo
++ifeq ($(link-obsolete-rpc),yes)
+ install-bin := rpcgen
+ rpcgen-objs = rpc_main.o rpc_hout.o rpc_cout.o rpc_parse.o \
+ 	      rpc_scan.o rpc_util.o rpc_svcout.o rpc_clntout.o \
+ 	      rpc_tblout.o rpc_sample.o
+ extra-objs = $(rpcgen-objs) $(addprefix cross-,$(rpcgen-objs))
+ others += rpcgen
++endif
+ 
+ all: # Make this the default target; it will be defined in Rules.
+ 
+@@ -103,12 +105,14 @@ ifeq ($(have-thread-library),yes)
+ xtests += thrsvc
+ endif
+ 
++ifeq ($(link-obsolete-rpc),yes)
+ headers += $(rpcsvc:%.x=rpcsvc/%.h)
+ extra-libs := librpcsvc
+ extra-libs-others := librpcsvc # Make it in `others' pass, not `lib' pass.
+ librpcsvc-routines = $(rpcsvc:%.x=x%)
+ librpcsvc-inhibit-o = .os # Build no shared rpcsvc library.
+ omit-deps = $(librpcsvc-routines)
++endif
+ 
+ ifeq (yes,$(build-shared))
+ rpc-compat-routines = $(addprefix compat-,$(need-export-routines))

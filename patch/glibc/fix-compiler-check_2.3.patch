@@ -1,0 +1,62 @@
+diff --git a/configure b/configure
+index c06de4f6a4..478982c719 100755
+--- a/configure
++++ b/configure
+@@ -4827,6 +4827,7 @@ cat >>conftest.$ac_ext <<_ACEOF
+ #include <stddef.h>
+ #define __need_NULL
+ #include <stddef.h>
++void abort ();
+ int
+ main ()
+ {
+@@ -6173,9 +6174,9 @@ if test "${libc_cv_gcc_exceptions+set}" = set; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   cat > conftest.c <<\EOF
+-_start () {}
++int _start () {}
+ int __eh_pc;
+-__throw () {}
++int __throw () {}
+ EOF
+ if { ac_try='${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS
+ 			    -nostdlib -nostartfiles -fexceptions
+diff --git a/configure.in b/configure.in
+index ab4975e481..4e3c6e6a46 100644
+--- a/configure.in
++++ b/configure.in
+@@ -923,7 +923,8 @@ AC_TRY_COMPILE(dnl
+ #define __need_wchar_t
+ #include <stddef.h>
+ #define __need_NULL
+-#include <stddef.h>], [size_t size; wchar_t wchar;
++#include <stddef.h>
++void abort ();], [size_t size; wchar_t wchar;
+ #ifdef offsetof
+ #error stddef.h ignored __need_*
+ #endif
+@@ -1676,9 +1677,9 @@ fi
+ 
+ AC_CACHE_CHECK(for ld --no-whole-archive, libc_cv_ld_no_whole_archive, [dnl
+ cat > conftest.c <<\EOF
+-_start () {}
++int _start () {}
+ int __eh_pc;
+-__throw () {}
++int __throw () {}
+ EOF
+ dnl No \ in command here because it ends up inside ''.
+ if AC_TRY_COMMAND([${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS
+@@ -1696,9 +1697,9 @@ AC_SUBST(no_whole_archive)dnl
+ 
+ AC_CACHE_CHECK(for gcc -fexceptions, libc_cv_gcc_exceptions, [dnl
+ cat > conftest.c <<\EOF
+-_start () {}
++int _start () {}
+ int __eh_pc;
+-__throw () {}
++int __throw () {}
+ EOF
+ dnl No \ in command here because it ends up inside ''.
+ if AC_TRY_COMMAND([${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS

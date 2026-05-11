@@ -1,0 +1,25 @@
+diff --git a/Makerules b/Makerules
+index 43fa5a701b..e55f3cf55c 100644
+--- a/Makerules
++++ b/Makerules
+@@ -571,6 +571,7 @@ build-module-helper-objlist = \
+ 	$(patsubst %_pic.a,$(whole-archive) %_pic.a $(no-whole-archive),\
+ 		   $(filter-out %.lds $(map-file) $(+preinit) $(+postinit),$^))
+ whole-archive := -Wl,--whole-archive
++no-whole-archive := -Wl,--no-whole-archive
+ 
+ build-module-objlist = $(build-module-helper-objlist) $(LDLIBS-$(@F:%.so=%).so)
+ build-shlib-objlist = $(build-module-helper-objlist) \
+diff --git a/config.make.in b/config.make.in
+index d65706ceac..69c7105476 100644
+--- a/config.make.in
++++ b/config.make.in
+@@ -5,7 +5,7 @@ version = @VERSION@
+ release = @RELEASE@
+ 
+ # Installation prefixes.
+-install_root =
++install_root = $(DESTDIR)
+ prefix = @prefix@
+ exec_prefix = @exec_prefix@
+ datadir = @datadir@

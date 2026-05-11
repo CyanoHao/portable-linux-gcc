@@ -1,0 +1,22 @@
+diff --git a/sysdeps/x86_64/nptl/tls.h b/sysdeps/x86_64/nptl/tls.h
+index 3e811b6aea..4f38d8f4f9 100644
+--- a/sysdeps/x86_64/nptl/tls.h
++++ b/sysdeps/x86_64/nptl/tls.h
+@@ -268,7 +268,7 @@ typedef struct
+ 	   abort ();							      \
+ 									      \
+ 	 asm volatile ("movq %q0,%%fs:%P1" :				      \
+-		       : IMM_MODE ((uint64_t) cast_to_integer (value)),	      \
++		       : "er" ((uint64_t) cast_to_integer (value)),	      \
+ 			 "i" (offsetof (struct pthread, member)));	      \
+        }})
+ 
+@@ -293,7 +293,7 @@ typedef struct
+ 	   abort ();							      \
+ 									      \
+ 	 asm volatile ("movq %q0,%%fs:%P1(,%q2,8)" :			      \
+-		       : IMM_MODE ((uint64_t) cast_to_integer (value)),	      \
++		       : "er" ((uint64_t) cast_to_integer (value)),	      \
+ 			 "i" (offsetof (struct pthread, member[0])),	      \
+ 			 "r" (idx));					      \
+        }})

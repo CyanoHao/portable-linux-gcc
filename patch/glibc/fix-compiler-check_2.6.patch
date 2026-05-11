@@ -1,0 +1,92 @@
+diff --git a/configure b/configure
+index ce76653821..cb1a0cb997 100755
+--- a/configure
++++ b/configure
+@@ -5807,6 +5807,7 @@ cat >>conftest.$ac_ext <<_ACEOF
+ #include <stddef.h>
+ #define __need_NULL
+ #include <stddef.h>
++void abort ();
+ int
+ main ()
+ {
+@@ -6868,7 +6869,7 @@ else
+   cat > conftest.c <<EOF
+ int foo;
+ #ifdef __GNUC_GNU_INLINE__
+-main () { return 0;}
++int main () { return 0;}
+ #else
+ #error
+ #endif
+@@ -7213,9 +7214,9 @@ if test "${libc_cv_ld_no_whole_archive+set}" = set; then
+   $as_echo_n "(cached) " >&6
+ else
+   cat > conftest.c <<\EOF
+-_start () {}
++int _start () {}
+ int __eh_pc;
+-__throw () {}
++int __throw () {}
+ EOF
+ if { ac_try='${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS
+ 			    -nostdlib -nostartfiles -Wl,--no-whole-archive
+@@ -7243,9 +7244,9 @@ if test "${libc_cv_gcc_exceptions+set}" = set; then
+   $as_echo_n "(cached) " >&6
+ else
+   cat > conftest.c <<\EOF
+-_start () {}
++int _start () {}
+ int __eh_pc;
+-__throw () {}
++int __throw () {}
+ EOF
+ if { ac_try='${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS
+ 			    -nostdlib -nostartfiles -fexceptions
+diff --git a/configure.in b/configure.in
+index 182c683e50..d4183daec1 100644
+--- a/configure.in
++++ b/configure.in
+@@ -1116,7 +1116,8 @@ AC_TRY_COMPILE(dnl
+ #define __need_wchar_t
+ #include <stddef.h>
+ #define __need_NULL
+-#include <stddef.h>], [size_t size; wchar_t wchar;
++#include <stddef.h>
++void abort ();], [size_t size; wchar_t wchar;
+ #ifdef offsetof
+ #error stddef.h ignored __need_*
+ #endif
+@@ -1762,7 +1763,7 @@ AC_CACHE_CHECK(for -fgnu89-inline, libc_cv_gnu89_inline, [dnl
+ cat > conftest.c <<EOF
+ int foo;
+ #ifdef __GNUC_GNU_INLINE__
+-main () { return 0;}
++int main () { return 0;}
+ #else
+ #error
+ #endif
+@@ -1936,9 +1937,9 @@ fi
+ 
+ AC_CACHE_CHECK(for ld --no-whole-archive, libc_cv_ld_no_whole_archive, [dnl
+ cat > conftest.c <<\EOF
+-_start () {}
++int _start () {}
+ int __eh_pc;
+-__throw () {}
++int __throw () {}
+ EOF
+ dnl No \ in command here because it ends up inside ''.
+ if AC_TRY_COMMAND([${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS
+@@ -1956,9 +1957,9 @@ AC_SUBST(no_whole_archive)dnl
+ 
+ AC_CACHE_CHECK(for gcc -fexceptions, libc_cv_gcc_exceptions, [dnl
+ cat > conftest.c <<\EOF
+-_start () {}
++int _start () {}
+ int __eh_pc;
+-__throw () {}
++int __throw () {}
+ EOF
+ dnl No \ in command here because it ends up inside ''.
+ if AC_TRY_COMMAND([${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS

@@ -1,0 +1,51 @@
+diff --git a/elf/elf.h b/elf/elf.h
+index 0daff76a41..36b15ab3b9 100644
+--- a/elf/elf.h
++++ b/elf/elf.h
+@@ -602,6 +602,12 @@ typedef struct
+ #define NT_LWPSTATUS	16		/* Contains copy of lwpstatus struct */
+ #define NT_LWPSINFO	17		/* Contains copy of lwpinfo struct */
+ #define NT_PRFPXREG	20		/* Contains copy of fprxregset struct*/
++#define NT_PRXFPREG	0x46e62b7f	/* Contains copy of user_fxsr_struct*/
++#define NT_PPC_VMX	0x100		/* PowerPC Altivec/VMX registers */
++#define NT_PPC_SPE	0x101		/* PowerPC SPE/EVR registers */
++#define NT_386_TLS	0x200		/* i386 TLS slots (struct user_desc) */
++#define NT_386_IOPERM	0x201		/* x86 io permission bitmap (1=deny) */
++#define NT_X86_XSTATE	0x202		/* x86 extended state using xsave */
+ 
+ /* Legal values for the note segment descriptor types for object files.  */
+ 
+diff --git a/sysdeps/unix/sysv/linux/sys/ptrace.h b/sysdeps/unix/sysv/linux/sys/ptrace.h
+index b4aec4f208..7c718e92d3 100644
+--- a/sysdeps/unix/sysv/linux/sys/ptrace.h
++++ b/sysdeps/unix/sysv/linux/sys/ptrace.h
+@@ -109,8 +109,28 @@ enum __ptrace_request
+ #define PT_SETFPXREGS PTRACE_SETFPXREGS
+ 
+   /* Continue and stop at the next (return from) syscall.  */
+-  PTRACE_SYSCALL = 24
++  PTRACE_SYSCALL = 24,
+ #define PT_SYSCALL PTRACE_SYSCALL
++
++  /* Set ptrace filter options.  */
++  PTRACE_SETOPTIONS = 0x4200,
++#define PT_SETOPTIONS PTRACE_SETOPTIONS
++
++  /* Get last ptrace message.  */
++  PTRACE_GETEVENTMSG = 0x4201,
++#define PT_GETEVENTMSG PTRACE_GETEVENTMSG
++
++  /* Get siginfo for process.  */
++  PTRACE_GETSIGINFO = 0x4202,
++#define PT_GETSIGINFO PTRACE_GETSIGINFO
++
++  /* Set new siginfo for process.  */
++  PTRACE_SETSIGINFO = 0x4203,
++#define PT_SETSIGINFO PTRACE_SETSIGINFO
++
++  /* Get register content.  */
++  PTRACE_GETREGSET = 0x4204,
++#define PTRACE_GETREGSET PTRACE_GETREGSET
+ };
+ 
+ /* Perform process tracing functions.  REQUEST is one of the values

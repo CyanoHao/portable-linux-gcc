@@ -1,0 +1,7 @@
+--- !ifs-v1
+IfsVersion: 3.0
+SoName: libc.so.6
+Target: loongarch64-linux-gnu
+Symbols:
+  - { Type: Func, Name: memcpy }
+...

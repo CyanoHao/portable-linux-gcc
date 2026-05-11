@@ -1,0 +1,21 @@
+diff --git a/elf/tst-array2dep.c b/elf/tst-array2dep.c
+index e1596b5b37..ca301b57ae 100644
+--- a/elf/tst-array2dep.c
++++ b/elf/tst-array2dep.c
+@@ -1,6 +1,6 @@
+ #include <unistd.h>
+ 
+-static void init (void) __attribute__ ((constructor));
++static void init (void) __attribute__ ((constructor (1000)));
+ 
+ static void
+ init (void)
+@@ -8,7 +8,7 @@ init (void)
+   write (STDOUT_FILENO, "DSO init\n", 9);
+ }
+ 
+-static void fini (void) __attribute__ ((destructor));
++static void fini (void) __attribute__ ((destructor (1000)));
+ 
+ static void
+ fini (void)

@@ -1,0 +1,13 @@
+diff --git a/sysdeps/i386/fpu/ftestexcept.c b/sysdeps/i386/fpu/ftestexcept.c
+index 9038e04c3b..1979fe13fd 100644
+--- a/sysdeps/i386/fpu/ftestexcept.c
++++ b/sysdeps/i386/fpu/ftestexcept.c
+@@ -26,7 +26,7 @@
+ int
+ fetestexcept (int excepts)
+ {
+-  int temp;
++  short temp;
+   int xtemp = 0;
+ 
+   /* Get current exceptions.  */
